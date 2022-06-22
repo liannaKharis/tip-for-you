@@ -1,23 +1,37 @@
-import logo from './logo.svg';
+
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+ 
+   const [myAction, setMyAction] = useState('');
+
+
+   useEffect (()=> {
+    getAction();
+   }, [])
+   
+   const getAction = async ()=> {
+    const response = await fetch (`http://www.boredapi.com/api/activity/ `)
+    const data = await response.json();
+    console.log(data);
+    setMyAction(data.activity)
+   }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container up'>
+      <div className='App'>
+      <div className='container up'>
+      <h1 className='header'>Are you bored? Click and find out what you can do!</h1>
+      </div>
+      <div className='container'>
+     <h2 className='action'>{myAction}</h2>
+     </div>
+     <div className='container up btn'>
+     <button className='btn__tip' onClick={getAction}>New Tip</button>
+     </div>
+     </div>
     </div>
   );
 }
